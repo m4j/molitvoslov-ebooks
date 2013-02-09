@@ -1,0 +1,107 @@
+\documentclass[11pt,oneside]{book}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+\usepackage{graphicx}
+\graphicspath{{target/img/},{target/img/tall/},{target/img/wide/}}
+
+\usepackage{wrapfig}
+\usepackage{indentfirst}
+\usepackage{url}
+\usepackage{ifpdf}
+
+\renewcommand\sectionmark[1]{}
+\newcommand{\partornament}{cross}
+\newcommand{\ornament}{uzor_begin_10}
+\newcommand{\ornamentending}{uzor_end_3}
+
+% calculate header offset from text body
+\setlength\headheight{14pt}
+\newlength\headoff
+\addtolength\headoff{\headheight}
+\addtolength\headoff{\headsep}
+\addtolength\headoff{14pt}
+
+\title{Молитвослов на всякую потребу}
+\author{www.molitvoslov.org}
+\date{2011-10-13}
+\setcounter{secnumdepth}{-3}
+%\setcounter{tocdepth}{-1}
+
+\newcommand{\mypart}[1]{
+    \part{#1}
+}
+
+\newcommand{\mychapter}[1]{
+    \renewcommand{\thechapter}{}
+    \chapter{#1}
+}
+
+\newcommand{\mychapterz}[2]{
+    \renewcommand{\thechapter}{}
+    \chapter[#1]{#2}
+}
+
+\newcommand\mysubtitle[1]{
+    \subsubsection{#1}
+}
+
+\newcommand\mysubsection[1]{
+    \subsection{#1}
+}
+
+\newcommand\myparagraph[1]{
+    \paragraph{#1}
+}
+
+\newenvironment{mymulticols}[1]{}{}
+
+% the idea of identity environment is to provide a mechanism
+% to assign some id to the element it surrounds. Its main use is
+% with htlatex configs
+\newcommand\myid{}
+\newenvironment{identity}{}{}
+
+\newenvironment{Parallel}{}{}
+
+\newenvironment{centericon}{}{}
+
+\newcommand{\myfig}[2][0.43]{}
+
+\newcommand{\myfigh}[3][0.43]{}
+
+\newcommand{\myfigr}[2][0.43]{}
+
+\newcommand{\myfigrh}[3][0.43]{}
+
+\newcommand{\myfigure}[2][0.43]{\myfig[#1]{#2}}
+
+\newcommand{\mychapterending}[1][2.5]{}
+
+\newcommand{\bukvaending}{\mychapterending}
+
+\newcommand\longpage[1][1]{}
+\newcommand\shortpage[1][1]{}
+
+% save the value of current parindent to be used
+% later in minipage environments
+\newlength\myparindent
+\setlength\myparindent{\parindent}
+\newcommand\noparindent{\setlength\parindent{0pt}}
+\newcommand\restoreparindent{\setlength\parindent{\myparindent}}
+
+\long\def\symbolfootnote[#1]#2{\begingroup%
+\def\thefootnote{\fnsymbol{footnote}}\footnote[#1]{#2}\endgroup}
+
+\newcommand{\firstletter}[1]{#1}%{\myheadingcolor #1}}
+
+\input{../common-prayers}
+
+\renewcommand{\pripevc}[1]{#1}
+
+\begin{document}
+
+%\input{../_content_obolyachih}
+\input{../changes}
+
+\end{document}

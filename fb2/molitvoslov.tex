@@ -1,0 +1,30 @@
+\documentclass{book}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+\usepackage{url}
+\usepackage{ifpdf}
+
+% continueous footnote numbers
+\usepackage{chngcntr}
+\counterwithout{footnote}{chapter}
+
+\renewcommand\sectionmark[1]{}
+
+\title{Полный православный молитвослов на всякую потребу}
+\author{www.molitvoslov.org}
+
+\input{../common-prayers}
+
+\renewcommand{\pripevc}[1]{#1}
+
+\begin{document}
+
+\input{../\jobname-announce}
+
+\input{myroot.tmp}
+
+\input{../changes}
+
+\end{document}
+

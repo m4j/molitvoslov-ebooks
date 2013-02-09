@@ -1,0 +1,364 @@
+% The next three lines enable
+% 1) search in acrobat reader using unicode search strings
+% 2) copy and paste of unicode text from acrobat reader
+\input glyphtounicode.tex
+\input glyphtounicode-cmr.tex
+\pdfgentounicode=1
+
+\documentclass[11pt,oneside]{book}
+\usepackage[a4paper]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{xcolor}
+\usepackage{pdfcolparallel}
+\usepackage{graphicx}
+\graphicspath{{img/},{img/tall/},{img/wide/},{uzory/},{target/header/}}
+
+\usepackage{wrapfig}
+\usepackage{fancyhdr}
+\usepackage{indentfirst}
+\usepackage{lettrine}
+\usepackage{truncate}
+\usepackage{shorttoc}
+\usepackage{multicol}
+\usepackage{ragged2e}
+
+% http://ru.wikipedia.org/wiki/%D0%9A%D0%B8%D0%BD%D0%BE%D0%B2%D0%B0%D1%80%D1%8C_%28%D1%86%D0%B2%D0%B5%D1%82%29
+%\definecolor{kinovar}{cmyk}{0, 0.71, 0.77, 0.11}
+\definecolor{kinovar}{RGB}{227, 66, 52}
+
+\newcommand\myheadingcolor{\color{kinovar}}
+\newcommand\mychaptercolor{\color{kinovar}}
+\newcommand\myframecolor{\color{kinovar}}
+
+\usepackage{tocloft}
+\tocloftpagestyle{empty}
+% fill with dots after chapter titles
+\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}
+% centered TOC title
+\renewcommand{\cfttoctitlefont}{\hfill\Huge\bfseries\mychaptercolor}
+\renewcommand{\cftaftertoctitle}{\hfill}
+\renewcommand{\cftpartpresnum}{\S\ }
+
+\makeatletter
+\renewcommand{\@pnumwidth}{3em} \renewcommand{\@tocrmarg}{4em}
+\makeatother
+
+%\usepackage{pscyr}
+%\usepackage{paratype}
+\usepackage{PTSerif}
+\usepackage{calc,layouts}
+\usepackage{eso-pic}
+\usepackage{pifont}
+\usepackage{ifpdf}
+%\usepackage{etoolbox}
+
+\pagestyle{fancy}
+\lhead{} \chead{\myheadingcolor\textbf{\rightmark}} \rhead{}
+%\renewcommand{\headrulewidth}{0.4pt}
+%\renewcommand{\headrule}{{\myheadingcolor%
+%\hrule width\headwidth height\headrulewidth \vskip-\headrulewidth}}
+
+\lfoot{} \cfoot{---~\thepage~---} \rfoot{}
+
+\newcommand{\wb}[2]{\fontsize{#1}{#2}\usefont{U}{webo}{xl}{n}}
+
+% What follows has been elaborated starting from an original
+% post of Piet van Oostrum <piet@cs.uu.nl> on comp.text.tex .
+%
+% A4 pages are 210 mm wide and 297 mm high, i.e. about 595
+% bp wide and 842 bp high.  Allowing a 1 in (72 bp) white
+% margin on all sides (predefined inside TeX), that accounts
+% for a decoration border 451 bp wide and 698 bp high.  If
+% we want to use WeboMints characters in square cells with
+% 12 bp side, we need 37 cells (2 angles and 35 border) in
+% the X direction, for a total of 37*12 = 444 bp; and 58
+% cells in the Y direction, for a total of 58*12 = 696 bp.
+% The two white sides have a real dimension of (595-444)/2 =
+% 75 and (842-696)/2 = 73 bp's.
+
+%\fancyhf{}
+%\pagestyle{fancy}
+\newcommand\myborderding{\myframecolor\ding{68}}
+\newcommand\mycornerding{\myframecolor\ding{107}}
+\newcommand{\fancypageframe}{%
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\unitlength}{1bp}
+
+\fancyhead[HL]{\wb{15bp}{15bp}%         Offset (48,-16), found
+  \begin{picture}(0,0)(25,-32)%           by trial and error.
+    \put(0,0){\mycornerding}%                       Upper left corner
+    \multiput(12,0)(12,0){37}{\myborderding}%       Upper border
+    \put(456,0){\mycornerding}%                     Upper right corner
+    \multiput(0,-12)(0,-12){56}{\myborderding}%     Left border
+    \put(0,-684){\mycornerding}%                    Lower left corner
+    \multiput(12,-684)(12,0){37}{\myborderding}%    Lower border
+    \multiput(456,-12)(0,-12){56}{\myborderding}%   Right border
+    \put(456,-684){\mycornerding}%                  Lower right corner
+\end{picture}}}
+
+\fancypageframe
+
+\fancypagestyle{plain}{%
+\fancyhf{} % clear all header and footer fields
+\fancyfoot[C]{ ---~\thepage~--- } % except the center
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancypageframe}
+
+\renewcommand\sectionmark[1]{}
+\newcommand{\partornament}{cross}
+\newcommand{\ornament}{uzor_begin_10}
+\newcommand{\ornamentending}{uzor_end_3}
+
+% calculate header offset from text body
+\normalsize
+\setlength\headheight{2\baselineskip}
+\newlength\headoff
+\addtolength\headoff{\headheight}
+\addtolength\headoff{\headsep}
+\addtolength\headoff{18pt}
+
+% position chapter and toc headings higher
+\makeatletter
+\def\@part[#1]#2{%
+    \ifnum \c@secnumdepth >-2\relax
+      \refstepcounter{part}%
+      \addcontentsline{toc}{part}{\thepart\hspace{1em}#1}%
+    \else
+      \addcontentsline{toc}{part}{#1}%
+    \fi
+    %\addtocontents{toc}{\protect\mbox{}\protect\hrulefill\par}
+    \markboth{}{}%
+    \thispagestyle{empty}
+    {\centering
+     \interlinepenalty \@M
+     \normalfont
+     %~ \ifnum \c@secnumdepth >-2\relax
+       %~ \huge\bfseries \partname\nobreakspace\thepart
+       %~ \par
+       %~ \vskip 20\p@
+     %~ \fi
+     \includegraphics[width=\textwidth]{\partornament}
+     \par
+     \vskip 20\p@
+     \Huge \bfseries #2\par}%
+    \@endpart}
+
+
+\def\@makechapterhead#1{%
+  {\parindent \z@ \raggedright \normalfont
+    \ifnum \c@secnumdepth >\m@ne
+        \LARGE\bfseries \@chapapp\space \thechapter
+        \par\nobreak
+        \vskip 20\p@
+    \fi
+    \interlinepenalty\@M
+    \LARGE \bfseries \centering \mychaptercolor #1\par\nobreak
+    \vskip 20\p@
+  }}
+\def\@makeschapterhead#1{%
+  {\parindent \z@ \raggedright
+    \vspace*{-\headoff}
+    \includegraphics[width=\textwidth]{\ornament}
+    \normalfont
+    \interlinepenalty\@M
+    \vskip 15\p@
+    \huge \bfseries \centering \mychaptercolor  #1\par\nobreak
+    \vskip 10\p@
+  }}
+
+\renewcommand\section{\@startsection {section}{1}{\z@}%
+                                   {-3.5ex \@plus -1ex \@minus -.2ex}%
+                                   {2.3ex \@plus.2ex}%
+                                   {\normalfont\Large\bfseries\myheadingcolor\centering}}
+
+
+\makeatother
+
+\title{Полный православный молитвослов на всякую потребу}
+\author{www.molitvoslov.org}
+%\raggedbottom
+% widow/orphane control
+\widowpenalty=2000
+\clubpenalty=2000
+\setcounter{secnumdepth}{-2}
+\righthyphenmin=2
+
+\newcommand{\mychapter}[1]{
+    \cleardoublepage
+    \phantomsection
+    \addcontentsline{toc}{chapter}{#1}
+    \chapter*{#1}
+    \markright{#1}
+}
+
+\newcommand{\mychapterz}[2]{
+    \cleardoublepage
+    \phantomsection
+    \addcontentsline{toc}{chapter}{#1}
+    \chapter*{#2}
+    \markright{#1}
+}
+
+\setlength\intextsep{0pt}
+
+\newcommand{\myfig}[2][0.41]{
+    \begin{wrapfigure}{l}{0pt}
+    \includegraphics[width=#1\textwidth]{#2}
+    \end{wrapfigure}
+}
+
+\newcommand{\myfigh}[3][0.41]{
+    \begin{wrapfigure}[#3]{l}{0pt}
+    \includegraphics[width=#1\textwidth]{#2}
+    \end{wrapfigure}
+}
+
+\newcommand{\myfigr}[2][0.41]{
+    \begin{wrapfigure}{r}{0pt}
+    \includegraphics[width=#1\textwidth]{#2}
+    \end{wrapfigure}
+}
+
+\newcommand{\myfigrh}[3][0.41]{
+    \begin{wrapfigure}[#3]{r}{0pt}
+    \includegraphics[width=#1\textwidth]{#2}
+    \end{wrapfigure}
+}
+
+% was 0.7
+\newcommand{\myfigure}[2][0.95]{
+    \begin{center}
+    \includegraphics[width=#1\columnwidth]{#2}
+    \end{center}
+}
+
+\newcommand{\mypart}[1]{
+\part{#1}
+\markright{#1}
+}
+
+\newenvironment{mymulticols}[1][]{\begin{multicols}{2}[#1]}{\end{multicols}}
+
+% the idea of identity environment is to provide a mechanism
+% to assign some id to the element it surrounds. Its main use is
+% with htlatex configs
+\newcommand\myid{}
+\newenvironment{identity}[1]{}{}
+
+% Here's the command with two optional
+% arguments -- hight of the raisebox and width
+% of the ornament. The main command has one optional
+% argument and it relays to another command also with
+% an optional argument.
+%
+%\newcommand{\mychapterending}[1][2.5]{%
+%    \def\ArgI{{#1}}% first argument
+%    \mychapterendingRelay
+%}
+%\newcommand{\mychapterendingRelay}[1][0.4]{% second argument
+%    {\nopagebreak\centering%
+%        \raisebox{0pt}[\ArgI\baselineskip][0pt]{%
+%            \includegraphics[width=#1\textwidth]{\ornamentending}}\par}%
+%}
+
+\newcommand{\mychapterending}[1][0.35]{% second argument
+    \vfill
+    {\nopagebreak\centering%
+        \includegraphics[width=#1\textwidth]{\ornamentending}\par}%
+    \vfill
+}
+
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basictext}
+%~ \SetProtrusion
+%~ {
+%~ encoding = T2A,
+%~ family = *
+%~ }
+%~ {
+%~ « = {600,      },
+%~ » = {    ,  600},
+%~ „ = {1000,     },
+%~ “ = {    , 1000},
+%~ ( = {600,      },
+%~ ) = {    ,  600},
+%~ ! = {    , 1000},
+%~ ? = {    ,  600},
+%~ : = {    , 1000},
+%~ ; = {    , 1000},
+%~ . = {    , 1000},
+%~ - = {    , 800},
+%~ %— = {    ,  500},
+%~ %– = {    ,  500},
+%~ {,}= {    , 1000}
+%~ }
+%~ \DeclareMicrotypeSet{t2atext}{encoding=T2A}
+%~ \UseMicrotypeSet{t2atext}
+
+\usepackage[unicode=true]{hyperref}
+\hypersetup{pdftex, colorlinks=true, linkcolor=black, citecolor=black,
+filecolor=black, urlcolor=blue, pdftitle={Полный православный молитвослов на всякую потребу}, pdfauthor={www.molitvoslov.org},
+pdfsubject=, pdfkeywords={Православие,церковь,молитва,молитвослов,канон,акафист,правило,святой,вера,исцеление}}
+
+\sloppy
+
+\newcommand\longpage[1][1]{\enlargethispage{#1\baselineskip}}
+\newcommand\shortpage[1][1]{\enlargethispage{-#1\baselineskip}}
+
+% save the value of current parindent to be used
+% later in minipage environments
+\newlength\myparindent
+\setlength\myparindent{\parindent}
+\newcommand\noparindent{\setlength\parindent{0pt}}
+\newcommand\restoreparindent{\setlength\parindent{\myparindent}}
+
+\long\def\symbolfootnote[#1]#2{\begingroup%
+\def\thefootnote{\fnsymbol{footnote}}\footnote[#1]{#2}\endgroup}
+
+\setlength\footskip{6\baselineskip}
+
+% Make more compact lists
+\setlength\itemsep{2pt}
+
+\makeatletter
+\newcommand\mysubtitle{\@startsection{subsubsection}{3}{\z@}%
+                                     {-1.0ex\@plus -1ex \@minus -.2ex}%
+                                     {1.0ex \@plus .2ex}%
+                                     {\normalfont\normalsize\bfseries\centering\myheadingcolor}}
+\makeatother
+
+\newcommand\mysubsection[1]{%
+  \subsubsection*{\centering\myheadingcolor #1}}
+
+\newcommand\myparagraph[1]{%
+{\centering\myheadingcolor\bfseries #1\par}}
+
+% sectioning for dictionary
+\newcommand\bukva[1]{
+    \section*{#1}
+}
+\newcommand{\bukvaending}{}
+\newcommand\myemph[1]{{\small\myheadingcolor #1}}
+\newcommand{\firstletter}[1]{#1}%{\myheadingcolor #1}}
+
+\newcommand{\minicolumns}[2]{
+  \medskip
+  \ParallelLText{#1}
+  \ParallelRText{#2}
+  \ParallelPar
+}
+
+\newcommand{\myparsep}[1][0.3]{%
+  \nointerlineskip \vspace{0.7\baselineskip}%
+  \hspace{\fill}\rule{#1\linewidth}{0.7pt}\hspace{\fill}
+  \par\nointerlineskip \vspace{0.7\baselineskip}
+}
+
+\newcommand{\mybibleref}[1]{%
+  \myemph{\footnotesize #1}%
+}
+
+\input{common-prayers}
+

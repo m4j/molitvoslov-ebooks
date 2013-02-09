@@ -1,0 +1,22 @@
+# ignore tex/latex output
+*.log
+*.lof
+*.aux
+*.out
+*.toc
+/*.pdf
+*.epub
+*.fb2
+*.fb2.zip
+*.dvi
+*.ps
+*.ptc*
+*.mtc*
+*.maf 
+vc.tex
+/*.html
+target
+rel
+target/*
+*~
+.~lock*

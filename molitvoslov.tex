@@ -1,0 +1,68 @@
+\input{common-preamble}
+
+\begin{document}
+
+%\maketitle
+
+\begin{titlepage}
+  \AddToShipoutPicture*{
+     \put(0,0){%
+       \hfill\includegraphics[width=\paperwidth]{\jobname_a4}\hfill
+       %{\color{blue}\rule{\paperwidth}{1cm}}
+       }
+   }
+    \begin{flushright}
+    \vspace*{5in}
+    \bfseries
+    \sffamily
+
+
+    %{\centering \large от 2011-05-03 \\ версия 0.1}
+    \end{flushright}
+\end{titlepage}
+
+\newpage
+\thispagestyle{empty}
+\input{\jobname-announce}
+
+\newlength\savebeforepartskip
+\setlength\savebeforepartskip{\cftbeforepartskip}
+\setlength\cftbeforepartskip{3pt}
+\clearpage
+\renewcommand{\ornament}{uzor_psaltyr}
+\shorttableofcontents{Краткое оглавление}{-1}
+\thispagestyle{empty}\longpage[6]{}\mychapterending
+%~ \nopagebreak\medskip\begin{center}\includegraphics[width=0.20\textwidth]{uzor_end_2}\end{center}
+
+\clearpage
+\renewcommand{\ornament}{uzor_begin_2}
+{\noparindent
+\vspace*{-\headoff}
+\includegraphics[width=\textwidth]{\ornament}}
+\setlength\cftbeforepartskip{\savebeforepartskip}
+\addtolength\cftbeforechapskip{-5pt}
+
+% redefine empty pagestyle to include frame
+\fancypagestyle{empty}{%
+\fancyhf{} % clear all header and footer fields
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancypageframe}
+
+\vspace*{-5\baselineskip}
+\tableofcontents\mychapterending
+
+% set empty pagestyle back to defaults
+\fancypagestyle{empty}{%
+\fancyhf{} % clear all header and footer fields
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+}
+
+\renewcommand{\ornament}{uzor_begin_10}
+
+\input{root}
+
+\input{changes}
+
+\end{document}

@@ -1,0 +1,5 @@
+\Configure{fictionbook}{%
+   \Hinclude[*]{html4.4ht}%
+   \Hinclude[*]{unicode.4ht}%
+}
+
