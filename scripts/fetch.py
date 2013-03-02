@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#       cnv2tex.py -- screen scraping script
+#       fetch.py -- screen scraping script
 #
 #       Fetches the contents of the site www.molitvoslov.org and converts
 #       html to tex representation, also saves images under img/ directory
 #       
-#       Copyright 2011 Max Agapov <m4j@swissmail.org>
+#       Copyright 2011-13 Max Agapov <m4j@swissmail.org>
 #       
 #       This program is free software; you can redistribute it and/or modify
 #       it under the terms of the GNU General Public License as published by
@@ -170,7 +170,7 @@ class Fetcher:
             elif el.name == 'td' or el.name == 'th':
                 self.outputElement(el)
             elif el.name == 'ol':
-                self.olCounter = 0
+                self.olCounter = 1
                 self.outputElement(el)
             elif el.name == 'ul' and el.get('class') != 'nodehierarchy_title_list':
                 self.olCounter = None
@@ -178,8 +178,8 @@ class Fetcher:
             elif el.name == 'li':
                 self.myprint('\n\n')
                 if self.olCounter:
-                    self.olCounter = self.olCounter + 1
                     listItem = '%d. ' % self.olCounter
+                    self.olCounter = self.olCounter + 1
                     self.myprint(listItem)
                 self.outputElement(el)
                 

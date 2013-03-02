@@ -22,6 +22,7 @@ TARGET_IMG_DIR=$(TARGET_DIR)/img
 EPUB_HTML_DIR=$(TARGET_EPUB_DIR)/OEBPS
 EPUB_META_DIR=$(TARGET_EPUB_DIR)/META-INF
 TARGET_EPUB=$(BASEDIR)/$(TARGET_DIR)/$(TARGET)-$(VERSION).epub
+IMG_SIGN_OPTS="-gravity south -background white -fill grey65 -splice 0x26 -font Helvetica-Bold -pointsize 19 -annotate +0+2 'Изображение с портала www.molitvoslov.org'"
 
 # epub metadata
 include $(TARGET).mk
@@ -115,18 +116,23 @@ $(EPUB_HTML_DIR)/$(TARGET)*.html: $(TARGET)*.html $(XSLT)/*.xslt $(SCRIPTS)/*.sh
 		--stringparam docAuthor "$$CREATOR" \
 		--stringparam docFirstPage "$(TARGET).html" \
 		--stringparam docFirstPageLabel "Оглавление" \
-		-o $(EPUB_HTML_DIR)/toc.ncx $(XSLT)/epubmkncx.xslt $(TARGET).html && \
+		-o $(EPUB_HTML_DIR)/toc.ncx $(XSLT)/epubmkncx.xslt $(TARGET).html; \
 	$(SCRIPTS)/epubapplyxslt.sh $(TARGET) $(EPUB_HTML_DIR) $(XSLT)/epubxpgt.xslt; \
 	sed -i \
 		-e "s;$(TARGET_IMG_DIR)/wide;images;" \
 		-e "s;$(TARGET_IMG_DIR)/tall;images;" \
 		-e "s;$(TARGET_IMG_DIR);images;" \
 		$(EPUB_HTML_DIR)/$(TARGET)*.html; \
-	export img_fnames="`sed -n 's;^.*<img src="images/\([-_\.[:alnum:]]*\)".*$$;\1;p' $@ | sort -u`"; \
+	export img_fnames="`sed -n 's;^.*<img src="images/\([-_\.[:alnum:]]*\)".*$$;\1;p' $(EPUB_HTML_DIR)/$(TARGET)*.html | sort -u`"; \
+    echo $$img_fnames; \
 	for file in $$img_fnames; do \
 		fname=`find $(IMG) -name $$file`; \
-		cnv="convert $$fname -density 72 -quality 75 -resize 400x400 $(@D)/images/`basename $$fname`"; \
-		echo $$cnv; $$cnv; \
+		sign_opts=$(IMG_SIGN_OPTS); \
+		if ! expr "$$fname" : ".*/wide/.*"; then \
+			sign_opts="-rotate '90' $$sign_opts -rotate '-90'"; \
+		fi; \
+		cnv="convert $$fname -density 72 -quality 75 -resize 500x500 $$sign_opts $(@D)/images/`basename $$fname`"; \
+		echo $$cnv; sh -c "$$cnv"; \
 	done; \
 	$(SCRIPTS)/epubmkopf.sh $(TARGET) $(EPUB_HTML_DIR) $(XSLT)/epubmkspine.xslt >$(EPUB_HTML_DIR)/content.opf
 

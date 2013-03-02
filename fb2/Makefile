@@ -15,6 +15,7 @@ ALL_IMAGES=$(shell find $(IMG_DIR) -iname "*.jp*g")
 HTLATEX_CONFIG=custom.cfg
 COVERS=$(TOP)/header
 TARGET_FB2=$(TARGET_DIR)/$(TARGET)-$(VERSION).fb2
+IMG_SIGN_OPTS="-gravity south -background white -fill grey65 -splice 0x20 -font Helvetica-Bold -pointsize 13 -annotate +0+2 'Изображение с портала www.molitvoslov.org'"
 #UNICODE4HF=$(shell kpsewhich unicode.4hf)
 
 # epub metadata
@@ -86,8 +87,12 @@ fb2check:
 $(TARGET_DIR)/*.jpg: $(ALL_IMAGES)
 	for file in $?; do \
 		fname=`basename $$file`; \
-		cnv="convert -resize 333x333 -density 72 -quality 65 $$file $(@D)/$${fname%.*}.jpg"; \
-		echo $$cnv; $$cnv; \
+		sign_opts=$(IMG_SIGN_OPTS); \
+		if ! expr "$$file" : ".*/wide/.*"; then \
+			sign_opts="-rotate '90' $$sign_opts -rotate '-90'"; \
+		fi; \
+		cnv="convert $$file -resize 333x333 -density 72 -quality 65 $$sign_opts $(@D)/$${fname%.*}.jpg"; \
+		echo $$cnv; sh -c "$$cnv"; \
 	done
 
 img: $(TARGET_DIR) $(TARGET_DIR)/*.jpg

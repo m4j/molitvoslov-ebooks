@@ -20,3 +20,5 @@ rel
 target/*
 *~
 .~lock*
+*.swp
+*.tmp

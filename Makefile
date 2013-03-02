@@ -7,6 +7,7 @@ TARGET_DIR=target
 VERSION_FILE=VERSION
 VERSION=$(shell cat $(VERSION_FILE))
 SCRIPTS=$(TOP)/scripts
+IMG_SIGN_OPTS="-gravity south -background white -fill grey65 -splice 0x26 -font Helvetica-Bold -pointsize 19 -annotate +0+2 'Изображение с портала www.molitvoslov.org'"
 
 FETCH_RESOURCES=[["/o-molitve"], "/content/soderzhanie", ["/slovar.php"]]
 
@@ -26,7 +27,7 @@ ARGS = "\nonstopmode $(INCLUDEONLY) \input{$(TARGET)}"
 all: clean-rel pdf-to-rel pdf-vk-to-rel epub-to-rel epub-vk-to-rel fb2-to-rel fb2-vk-to-rel
 
 clean-rel:
-	rm -rf rel/*
+	mkdir rel; rm -rf rel/*
 
 epub-to-rel:
 	cd epub && make clean epub
@@ -62,11 +63,21 @@ $(TARGET_DIR)/header/%.pdf: header/%.pdf $(VERSION_FILE)
 	# the contents of VERSION file and then recompress into target folder
 	$(PDFTK) $< output - uncompress | sed "s/\[( 012345)3(6789)\]TJ/( $(VERSION))Tj/" | $(PDFTK) - output $@ compress
 
-$(TARGET_DIR)/$(TARGET)-$(VERSION).pdf: *.tex img/* $(TARGET_DIR)/header $(TARGET_DIR)/header/$(TARGET)_a4.pdf uzory/*
+$(TARGET_DIR)/img/*.jpg: img/* img/tall/* img/wide/* 
+	mkdir -p $(TARGET_DIR)/img; \
+	for file in $?; do \
+		fname=`basename $$file`; \
+		sign_opts=$(IMG_SIGN_OPTS); \
+		if ! expr "$$file" : ".*/wide/.*"; then \
+			sign_opts="-rotate '90' $$sign_opts -rotate '-90'"; \
+		fi; \
+		cnv="convert $$file -density 72 -quality 85 -resize 500x500 $$sign_opts $(@D)/$${fname%.*}.jpg"; \
+		echo $$cnv; sh -c "$$cnv"; \
+	done
+    
+$(TARGET_DIR)/$(TARGET)-$(VERSION).pdf: *.tex $(TARGET_DIR)/img/*.jpg $(TARGET_DIR)/header $(TARGET_DIR)/header/$(TARGET)_a4.pdf uzory/*
 	mkdir -p $(TARGET_DIR)
 	$(LATEX) $(ARGS)
-	#makeindex $(TARGET).idx
-	#pdflatex $(TARGET).tex
 	latex_count=5 ; \
 	while egrep -s 'Rerun (LaTeX|to get cross-references right)' $(TARGET).log && [ $$latex_count -gt 0 ] ;\
 		do \
