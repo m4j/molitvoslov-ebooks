@@ -39,7 +39,7 @@ all: clean epub epubcheck
 
 epub: eps images $(TARGET_EPUB)
 
-eps: $(TARGET_EPUB_DIR) $(TARGET_IMG_DIR)/tall/*.eps $(TARGET_IMG_DIR)/wide/*.eps $(TARGET_IMG_DIR)/*.eps
+eps: $(TARGET_EPUB_DIR) $(TARGET_IMG_DIR)/tall/images $(TARGET_IMG_DIR)/wide/images $(TARGET_IMG_DIR)/images
 
 #images: $(TARGET_EPUB_DIR) $(EPUB_HTML_DIR)/images/*.png $(EPUB_HTML_DIR)/cover.svg $(EPUB_HTML_DIR)/cover.png $(EPUB_HTML_DIR)/thumb.jpg
 images: $(TARGET_EPUB_DIR) $(EPUB_HTML_DIR)/images/*.png $(EPUB_HTML_DIR)/cover.png $(EPUB_HTML_DIR)/thumb.jpg
@@ -53,29 +53,29 @@ $(TARGET_EPUB_DIR):
 	mkdir -p $(TARGET_IMG_DIR)/tall
 	mkdir -p $(TARGET_IMG_DIR)/wide
 
-$(TARGET_IMG_DIR)/*.eps: $(IMG)/*.jp*g $(ORNAMENTS)/*.pdf
-	cp $? $(@D)/
+$(TARGET_IMG_DIR)/images: $(IMG)/*.jp*g $(ORNAMENTS)/*.pdf
 	for file in $?; do \
 		fname=`basename $$file`; \
-		cnv="convert $$file $(@D)/$${fname%.*}.eps"; \
-		echo $$cnv; $$cnv; \
+		cp -v $$file $(@D)/$${fname%.*}.jpg; \
+		convert $$file $(@D)/$${fname%.*}.eps; \
 	done
+	touch $(@D)/images
 
-$(TARGET_IMG_DIR)/tall/*.eps: $(IMG)/tall/*.jp*g
-	cp $? $(@D)/
+$(TARGET_IMG_DIR)/tall/images: $(IMG)/tall/*.jp*g
 	for file in $?; do \
 		fname=`basename $$file`; \
-		cnv="convert $$file $(@D)/$${fname%.*}.eps"; \
-		echo $$cnv; $$cnv; \
+		cp -v $$file $(@D)/$${fname%.*}.jpg; \
+		convert $$file $(@D)/$${fname%.*}.eps; \
 	done
+	touch $(@D)/images
 
-$(TARGET_IMG_DIR)/wide/*.eps: $(IMG)/wide/*.jp*g
-	cp $? $(@D)/
+$(TARGET_IMG_DIR)/wide/images: $(IMG)/wide/*.jp*g
 	for file in $?; do \
 		fname=`basename $$file`; \
-		cnv="convert $$file $(@D)/$${fname%.*}.eps"; \
-		echo $$cnv; $$cnv; \
+		cp -v $$file $(@D)/$${fname%.*}.jpg; \
+		convert $$file $(@D)/$${fname%.*}.eps; \
 	done
+	touch $(@D)/images
 
 $(EPUB_HTML_DIR)/images/*.png: $(ORNAMENTS)/uzor_begin_10.pdf $(ORNAMENTS)/uzor_begin_4.pdf $(ORNAMENTS)/uzor_begin_9.pdf $(ORNAMENTS)/uzor_end_3.pdf $(ORNAMENTS)/uzor_psaltyr.pdf $(ORNAMENTS)/cross.pdf
 	for file in $?; do \
@@ -94,12 +94,12 @@ myroot.tmp: $(TOP)/root.tex
 	# for fb2...
 	sed "s/\\include{/\\input{..\//" $? >$@
 
-$(TARGET)*.html: *.tex $(HTLATEX_CONFIG) $(TARGET).tex myroot.tmp
+$(TARGET).html: *.tex $(HTLATEX_CONFIG) $(TARGET).tex myroot.tmp
 	#
 	# execute tex4ht process
 	$(LATEX) $(TARGET).tex "$(HTLATEX_CONFIG)" " -cunihtf -utf8" ""
 
-$(EPUB_HTML_DIR)/$(TARGET)*.html: $(TARGET)*.html $(XSLT)/*.xslt $(SCRIPTS)/*.sh
+$(EPUB_HTML_DIR)/$(TARGET).html: $(TARGET).html $(XSLT)/*.xslt $(SCRIPTS)/*.sh
 	#
 	# generate OPF and NCX files
 	export XML_CATALOG_FILES=$(XML_CATALOG_FILES); \
@@ -126,7 +126,7 @@ $(EPUB_HTML_DIR)/$(TARGET)*.html: $(TARGET)*.html $(XSLT)/*.xslt $(SCRIPTS)/*.sh
 	export img_fnames="`sed -n 's;^.*<img src="images/\([-_\.[:alnum:]]*\)".*$$;\1;p' $(EPUB_HTML_DIR)/$(TARGET)*.html | sort -u`"; \
     echo $$img_fnames; \
 	for file in $$img_fnames; do \
-		fname=`find $(IMG) -name $$file`; \
+		fname=`find $(TARGET_IMG_DIR) -name $$file`; \
 		sign_opts=$(IMG_SIGN_OPTS); \
 		if ! expr "$$fname" : ".*/wide/.*"; then \
 			sign_opts="-rotate '90' $$sign_opts -rotate '-90'"; \
@@ -157,7 +157,7 @@ $(EPUB_HTML_DIR)/cover.svg: $(COVERS)/$(TARGET)-ebook.svg
 	# copy cover file
 	cp -v $? $@
 	
-$(TARGET_EPUB): $(EPUB_HTML_DIR)/$(TARGET)*.html $(EPUB_HTML_DIR)/$(TARGET).css images
+$(TARGET_EPUB): $(EPUB_HTML_DIR)/$(TARGET).html $(EPUB_HTML_DIR)/$(TARGET).css images
 	#
 	# package everything
 	cd $(TARGET_EPUB_DIR); \
