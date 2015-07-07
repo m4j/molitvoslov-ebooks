@@ -15,6 +15,14 @@ ifdef ONLY
 INCLUDEONLY=\includeonly{$(ONLY)}
 endif
 
+UNAME=$(shell uname)
+ifeq ($(UNAME), Linux)
+    SED_INPLACE=sed -i
+endif
+ifeq ($(UNAME), Darwin)
+    SED_INPLACE=sed -i ''
+endif
+
 .PHONY: all fetch clean clean-rel pdf-to-rel pdf-vk-to-rel epub-to-rel epub-vk-to-rel fb2-to-rel fb2-vk-to-rel
 
 fetch:
@@ -61,7 +69,7 @@ $(TARGET_DIR)/header/%.pdf: header/%.pdf $(VERSION_FILE)
 	# Edit title page pdf:
 	# uncompress title page pdf and replace version string 0123456789 with
 	# the contents of VERSION file and then recompress into target folder
-	$(PDFTK) $< output - uncompress | sed "s/\[( 012345)3(6789)\]TJ/( $(VERSION))Tj/" | $(PDFTK) - output $@ compress
+	$(PDFTK) $< output - uncompress | LC_ALL=C sed "s/\[( 012345)3(6789)\]TJ/( $(VERSION))Tj/" | $(PDFTK) - output $@ compress
 
 $(TARGET_DIR)/img/*.jpg: img/* img/tall/* img/wide/* 
 	mkdir -p $(TARGET_DIR)/img; \

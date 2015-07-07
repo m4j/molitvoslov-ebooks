@@ -24,6 +24,14 @@ EPUB_META_DIR=$(TARGET_EPUB_DIR)/META-INF
 TARGET_EPUB=$(BASEDIR)/$(TARGET_DIR)/$(TARGET)-$(VERSION).epub
 IMG_SIGN_OPTS="-gravity south -background white -fill grey65 -splice 0x26 -font Helvetica-Bold -pointsize 19 -annotate +0+2 'Изображение с портала www.molitvoslov.org'"
 
+UNAME=$(shell uname)
+ifeq ($(UNAME), Linux)
+    SED_INPLACE=sed -i
+endif
+ifeq ($(UNAME), Darwin)
+    SED_INPLACE=sed -i ''
+endif
+
 # epub metadata
 include $(TARGET).mk
 
@@ -118,7 +126,7 @@ $(EPUB_HTML_DIR)/$(TARGET).html: $(TARGET).html $(XSLT)/*.xslt $(SCRIPTS)/*.sh
 		--stringparam docFirstPageLabel "Оглавление" \
 		-o $(EPUB_HTML_DIR)/toc.ncx $(XSLT)/epubmkncx.xslt $(TARGET).html; \
 	$(SCRIPTS)/epubapplyxslt.sh $(TARGET) $(EPUB_HTML_DIR) $(XSLT)/epubxpgt.xslt; \
-	sed -i \
+	$(SED_INPLACE)  \
 		-e "s;$(TARGET_IMG_DIR)/wide;images;" \
 		-e "s;$(TARGET_IMG_DIR)/tall;images;" \
 		-e "s;$(TARGET_IMG_DIR);images;" \
