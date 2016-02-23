@@ -68,14 +68,14 @@ class Fetcher:
                 sys.stdout.write('\n')
                 sys.stdout.write('  ' * (level + 1) + self.baseUrl + path + ' --> ' + self.getMyFile().name + '...')
                 soup = self.getSoup(path)
-                my_td = self.getMyTd(soup)
+                my_content = self.getContent(soup)
                 if level != 0:
-                    heading = self.getHeading(my_td)
+                    heading = self.getHeading(my_content)
                     self.myprint('\n\n\\' + sections[level] + '{' + heading + '}')
                 sys.stdout.write('done.')
-                self.myprint('\n%' + self.baseUrl + path)
-                node = self.getNode(my_td)
-                self.outputElement(self.getContents(node))
+                self.myprint('\n%' + path + '\n\n')
+                node = self.getNode(my_content)
+                self.outputElement(self.getNodeContent(node))
                 subtitles = self.getSubtitles(node)
             for href in subtitles:
                 if level == 0:
@@ -119,17 +119,22 @@ class Fetcher:
 
     def getNode(self, td):
         return td.find('div', { 'class' : 'node' })
-        
-    def getContents(self, node):
-        return node.div.contents
+
+    def getNodeContent(self, node):
+        return node.find('div', { 'class' : 'content' })
 
     def myprint(self, str):
         self.getMyFile().write(str)
+
+    def shouldExclude(self, el):
+        return el.get('class') == 'print-link'
 
     def outputElement(self, root):
         for el in root:
             if isinstance(el, NavigableString):
                 self.writeText(el)
+            elif self.shouldExclude(el):
+                continue
             elif el.name == 'br':
                 self.myprint('\n\n')
             elif el.name == 'p':
@@ -150,7 +155,7 @@ class Fetcher:
                 if el.get('class') == 'icona':
                     file_name = self.findAndSaveBigIcon(el)
                     if file_name != None:
-                        self.myprint('\\myfig{' + file_name + '}')
+                        self.myprint('\n\n\\myfig{' + file_name + '}')
                         sys.stdout.write(', ' + file_name)
                 else:
                     self.outputElement(el)
@@ -161,6 +166,8 @@ class Fetcher:
             elif el.name == 'sup':
                 self.outputElement(el)
             elif el.name == 'table' and el.get('class') == 'description':
+                self.outputElement(el)
+            elif el.name == 'div' and el.get('class') == 'node-body':
                 self.outputElement(el)
             elif el.name == 'tbody':
                 self.outputElement(el)
@@ -212,8 +219,8 @@ class Fetcher:
         s = s.replace('&nbsp;', ' ')
         self.myprint(s)
 
-    def getMyTd(self, soup):
-        return soup.find('div', id='center').table.tr.td.findNextSibling('td')
+    def getContent(self, soup):
+        return soup.find('div', id='content')
         
     def getSoup(self, path = '/'):
         page = urlopen(self.baseUrl + path)

@@ -14,9 +14,17 @@ $ {
         # copy from the hold to the pattern buffer
         g
         # do the search and replace
+        s/([[:alnum:][:punct:]][[:space:]]*)\n([[:alnum:][:punct:]])/\1 \2/g
+        s/[[:space:]]+\n/\
+\
+/g
+        s/\n[[:space:]]+/\
+\
+/g
         s/\n[[:space:]]*\n[[:space:]]*\n+/\
 \
 /g
+        s/[[:blank:]][[:blank:]]/ /g
         # print
         p
 }' "$1"

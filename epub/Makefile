@@ -22,7 +22,8 @@ TARGET_IMG_DIR=$(TARGET_DIR)/img
 EPUB_HTML_DIR=$(TARGET_EPUB_DIR)/OEBPS
 EPUB_META_DIR=$(TARGET_EPUB_DIR)/META-INF
 TARGET_EPUB=$(BASEDIR)/$(TARGET_DIR)/$(TARGET)-$(VERSION).epub
-IMG_SIGN_OPTS="-gravity south -background white -fill grey65 -splice 0x26 -font Helvetica-Bold -pointsize 19 -annotate +0+2 'Изображение с портала www.molitvoslov.org'"
+#IMG_SIGN_OPTS="-gravity south -background white -fill grey65 -splice 0x26 -font Helvetica-Bold -pointsize 19 -annotate +0+2 'Изображение с портала www.molitvoslov.org'"
+IMG_SIGN_OPTS=
 
 UNAME=$(shell uname)
 ifeq ($(UNAME), Linux)
@@ -50,7 +51,7 @@ epub: eps images $(TARGET_EPUB)
 eps: $(TARGET_EPUB_DIR) $(TARGET_IMG_DIR)/tall/images $(TARGET_IMG_DIR)/wide/images $(TARGET_IMG_DIR)/images
 
 #images: $(TARGET_EPUB_DIR) $(EPUB_HTML_DIR)/images/*.png $(EPUB_HTML_DIR)/cover.svg $(EPUB_HTML_DIR)/cover.png $(EPUB_HTML_DIR)/thumb.jpg
-images: $(TARGET_EPUB_DIR) $(EPUB_HTML_DIR)/images/*.png $(EPUB_HTML_DIR)/cover.png $(EPUB_HTML_DIR)/thumb.jpg
+images: $(TARGET_EPUB_DIR) $(EPUB_HTML_DIR)/images/*.png $(EPUB_HTML_DIR)/cover.jpg $(EPUB_HTML_DIR)/thumb.jpg
 
 $(TARGET_EPUB_DIR):
 	#
@@ -85,7 +86,7 @@ $(TARGET_IMG_DIR)/wide/images: $(IMG)/wide/*.jp*g
 	done
 	touch $(@D)/images
 
-$(EPUB_HTML_DIR)/images/*.png: $(ORNAMENTS)/uzor_begin_10.pdf $(ORNAMENTS)/uzor_begin_4.pdf $(ORNAMENTS)/uzor_begin_9.pdf $(ORNAMENTS)/uzor_end_3.pdf $(ORNAMENTS)/uzor_psaltyr.pdf $(ORNAMENTS)/cross.pdf
+$(EPUB_HTML_DIR)/images/*.png: $(ORNAMENTS)/uzor_begin_10.pdf $(ORNAMENTS)/uzor_begin_4.pdf $(ORNAMENTS)/uzor_begin_9.pdf $(ORNAMENTS)/uzor_end_3.pdf $(ORNAMENTS)/uzor_psaltyr.pdf $(ORNAMENTS)/krest.pdf
 	for file in $?; do \
 		fname=`basename $$file`; \
 		resize_to="600x600"; \
@@ -150,10 +151,10 @@ $(EPUB_HTML_DIR)/$(TARGET).css: $(EPUB_CSS)
 	# copy our own css
 	cp -v $? $@
 
-$(EPUB_HTML_DIR)/cover.png: $(COVERS)/$(TARGET)-ebook.svg
+$(EPUB_HTML_DIR)/cover.jpg: $(COVERS)/$(TARGET)-ebook.svg
 	#
 	# copy cover file
-	convert $? -resize 685x685 $@
+	convert $? -resize 1600x2400 $@
 	
 $(EPUB_HTML_DIR)/thumb.jpg: $(COVERS)/$(TARGET)-ebook.svg
 	#

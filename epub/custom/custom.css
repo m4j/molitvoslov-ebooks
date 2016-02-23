@@ -2,6 +2,7 @@
 .latt-1095{font-family: monospace}
 .lati-1095{font-style: italic}
 .labx-1095{font-weight: bold}
+.textbf{font-weight: bold}
 .cmmi-10x-x-109{font-style: italic}
 .larm-1000{font-size:0.90em}
 .larm-0900{font-size:0.85em}
@@ -10,6 +11,7 @@
 .labx-1440{font-size:1.27em;font-weight: bold}
 .myemph{color:#E34234;font-size:0.90em}
 .myemph .larm-1000 {font-size:1em}
+p { text-align: left; margin: 0px; line-height:1.3em}
 p.noindent { text-indent: 0em }
 p.indent{ text-indent: 1.3em }
 dd {margin-left: 1em}
@@ -34,27 +36,26 @@ div.footnotes p{margin-top:0; margin-bottom:0; text-indent:0}
 .quote {margin-bottom:0.25em; margin-top:0.25em; margin-left:1em; margin-right:1em; text-align:justify}
 .verse{white-space:nowrap; margin-left:2em}
 div.maketitle {text-align:center}
-h2.titleHead{text-align:center}
-h3.sectionHead{margin-top:0.8em; margin-bottom:0.6em; font-weight: bold; text-align: center; font-size: 1.17em}
-h4.subsectionHead{text-align:center}
-h5.subsubsectionHead {margin-top:0.7em; margin-bottom:0.5em; font-weight: bold; text-align: center; font-size: 1em}
 div.maketitle{ margin-bottom: 2em}
 div.author, div.date {text-align:center}
 .sectionToc, .bukvaToc {margin-left:2.5em; text-indent: -1em}
 .bukvaToc {float: left; text-align: right}
 .subsubsectionToc {margin-left:6em}
- .wrapfig-r {text-align: left; float:right; margin-left:0.5em; margin-top: 0.5em; width:50%} 
- .wrapfig-rt {text-align: left; float:right; margin-left:0.5em; margin-top: 0.5em;width:37%} 
- .wrapfig-rw {text-align: left; float:right; margin-left:0.5em; margin-top: 0.5em;width:70%} 
- .wrapfig-l {text-align: right; float:left; margin-right:0.5em; margin-top: 0.5em; width:50%} 
- .wrapfig-lt {text-align: right; float:left; margin-right:0.5em; margin-top: 0.5em; width:37%} 
- .wrapfig-lw {text-align: right; float:left; margin-right:0.5em; margin-top: 0.5em; width:70%} 
+ .wrapfig-r {margin-right: 25%; margin-left: 25%; width:50%} 
+ .wrapfig-rt {margin-right: 32%; margin-left: 32%; width:36%} 
+ .wrapfig-rw {margin-right: 15%; margin-left: 15%; width:70%} 
+ .wrapfig-l {margin-right: 25%; margin-left: 25%; width:50%} 
+ .wrapfig-lt {margin-right: 32%; margin-left: 32%; width:36%} 
+ .wrapfig-lw {margin-right: 15%; margin-left: 15%; width:70%} 
 body { font-family: "PT Serif"}
-h1,h2,h3,h4,h5 { text-align: left; color: #E34234; hyphens: none; -webkit-hyphens:none; -moz-hyphens:none; page-break-after:avoid; }
+h1,h2,h3,h4,h5 { text-align: left; color: #E34234; hyphens: none !important; -epub-hyphens:none !important; -webkit-hyphens:none !important; -moz-hyphens:none !important; page-break-after:avoid !important; }
+h2.titleHead{text-align:center}
+h3.sectionHead{margin-top:0.8em; margin-bottom:0.6em; font-weight: bold; text-align: center; font-size: 1.17em}
+h4.subsectionHead{text-align:center}
+h5.subsubsectionHead {margin-top:0.7em; margin-bottom:0.5em; font-weight: bold; text-align: center; font-size: 1em; page-break-after:avoid; }
 a { text-decoration: none; text-align: left }
 .partTOCS, .chapterTOCS, .tableofcontents { text-align: left; margin-left:0; margin-bottom:1.5em}
 span.titlemark { line-height: 300% }
-p { margin: 0px; line-height:1.3em}
 li.itemize {text-align: left; margin-left: -0.3em;}
 #announce {
     page-break-after: always;

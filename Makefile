@@ -7,7 +7,9 @@ TARGET_DIR=target
 VERSION_FILE=VERSION
 VERSION=$(shell cat $(VERSION_FILE))
 SCRIPTS=$(TOP)/scripts
-IMG_SIGN_OPTS="-gravity south -background white -fill grey65 -splice 0x26 -font Helvetica-Bold -pointsize 19 -annotate +0+2 'Изображение с портала www.molitvoslov.org'"
+#IMG_SIGN_OPTS="-gravity south -background white -fill grey65 -splice 0x26 -font Helvetica-Bold -pointsize 19 -annotate +0+2 'Изображение с портала www.molitvoslov.org'"
+IMG_SIGN_OPTS=
+FETCH_URL=http://www.molitvoslov.org
 
 FETCH_RESOURCES=[["/o-molitve"], "/content/soderzhanie", ["/slovar.php"]]
 
@@ -28,7 +30,7 @@ endif
 fetch:
 	fdir=import_`date '+%Y%m%d'`; \
 	mkdir -p $$fdir/img && \
-	cd $$fdir && $(SCRIPTS)/fetch.py 0 http://www.molitvoslov.org '$(FETCH_RESOURCES)'
+	cd $$fdir && $(SCRIPTS)/fetch.py 0 $(FETCH_URL) '$(FETCH_RESOURCES)'
 
 ARGS = "\nonstopmode $(INCLUDEONLY) \input{$(TARGET)}"
 
