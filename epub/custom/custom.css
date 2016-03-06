@@ -10,10 +10,13 @@
 .labx-0900{font-size:0.85em;font-weight: bold}
 .labx-1440{font-size:1.27em;font-weight: bold}
 .myemph{color:#E34234;font-size:0.90em}
+.mysmall{font-size:0.90em}
 .myemph .larm-1000 {font-size:1em}
 p { text-align: left; margin: 0px; line-height:1.3em}
 p.noindent { text-indent: 0em }
 p.indent{ text-indent: 1.3em }
+.verse {margin-top:0.7em}
+.verse p {margin-left:3.3em; text-indent: -2em;}
 dd {margin-left: 1em}
 dd.enumerate {margin-left: 4em}
 dt {float:left; clear:left; margin-right:0.5em; text-align:right}
@@ -34,7 +37,6 @@ div.footnotes p{margin-top:0; margin-bottom:0; text-indent:0}
 .partToc a, .partToc, .chapterToc a, .chapterToc {font-weight:bold; margin-top:0.5em; page-break-inside: avoid}
 .partHead, .chapterHead, .likechapterHead, .sectionHead, .subsectionHead {text-align: center; margin-top:0.5em; line-height: 1em; clear:both}
 .quote {margin-bottom:0.25em; margin-top:0.25em; margin-left:1em; margin-right:1em; text-align:justify}
-.verse{white-space:nowrap; margin-left:2em}
 div.maketitle {text-align:center}
 div.maketitle{ margin-bottom: 2em}
 div.author, div.date {text-align:center}
@@ -48,7 +50,7 @@ div.author, div.date {text-align:center}
  .wrapfig-lt {margin-right: 32%; margin-left: 32%; width:36%} 
  .wrapfig-lw {margin-right: 15%; margin-left: 15%; width:70%} 
 body { font-family: "PT Serif"}
-h1,h2,h3,h4,h5 { text-align: left; color: #E34234; hyphens: none !important; -epub-hyphens:none !important; -webkit-hyphens:none !important; -moz-hyphens:none !important; page-break-after:avoid !important; }
+h1,h2,h3,h4,h5 { text-align: left; color: #E34234; hyphens: none; -epub-hyphens:none; -webkit-hyphens:none; -moz-hyphens:none; page-break-after:avoid; }
 h2.titleHead{text-align:center}
 h3.sectionHead{margin-top:0.8em; margin-bottom:0.6em; font-weight: bold; text-align: center; font-size: 1.17em}
 h4.subsectionHead{text-align:center}
