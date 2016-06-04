@@ -1,7 +1,6 @@
-BOOK_ID=http://www.molitvoslov.org/content/velikiy-kanon
-CREATOR=www.molitvoslov.org
-PUBLISHER=www.molitvoslov.org
-RIGHTS=Public domain
-TITLE=Великий Канон преподобного Андрея Критского
+BOOK_ID=http://www.molitvoslov.com/molitvoslov/fb2\#molitvoslov-vk
+CREATOR=Преподобный Андрей Критский
+PUBLISHER=Издательство сайта Molitvoslov.com
+TITLE=Великий Канон 
 BOOK_LANG=ru
 

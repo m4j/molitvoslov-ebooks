@@ -6,7 +6,7 @@
 #       in the current directory. Target pattern, target directory and
 #       XSLT are supplied as arguments.
 #       
-#       Copyright 2011 Max Agapov <m4j@swissmail.org>
+#       Copyright 2011 Maxim Agapov <m4j@swissmail.org>
 #       
 #       This program is free software; you can redistribute it and/or modify
 #       it under the terms of the GNU General Public License as published by
@@ -42,9 +42,10 @@ if [ -z "$DATE" ]; then
 fi
 
 # transform all matching html files in the directory
-for file in $TARGET*.html; do
-    printf 'Transforming %s...' "$file"
-    xsltproc --nonet -o "$HTML_DIR/$file" "$XSLT" "$file"
+for file in $TARGET??*.html; do
+    outfile=${file%.*}.xhtml
+    printf 'Transforming %s to %s...' "$file" "$outfile"
+    xsltproc --nonet -o "$HTML_DIR/$outfile" "$XSLT" "$file"
     rc=$?
     if [ $rc -ne 0 ]; then
         # if something went wrong, restore previous order

@@ -15,7 +15,8 @@ ALL_IMAGES=$(shell find $(IMG_DIR) -iname "*.jp*g")
 HTLATEX_CONFIG=custom.cfg
 COVERS=$(TOP)/header
 TARGET_FB2=$(TARGET_DIR)/$(TARGET)-$(VERSION).fb2
-IMG_SIGN_OPTS="-gravity south -background white -fill grey65 -splice 0x20 -font Helvetica-Bold -pointsize 13 -annotate +0+2 'Изображение с портала www.molitvoslov.org'"
+#IMG_SIGN_OPTS="-gravity south -background white -fill grey65 -splice 0x20 -font Helvetica-Bold -pointsize 13 -annotate +0+2 'Изображение с портала www.molitvoslov.org'"
+IMG_SIGN_OPTS=""
 #UNICODE4HF=$(shell kpsewhich unicode.4hf)
 
 # epub metadata

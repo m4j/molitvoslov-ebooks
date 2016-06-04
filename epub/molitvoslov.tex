@@ -9,10 +9,11 @@
 \usepackage{indentfirst}
 \usepackage{url}
 \usepackage{ifpdf}
+\usepackage{etoolbox}
 
 \renewcommand\sectionmark[1]{}
 \newcommand{\partornament}{krest}
-\newcommand{\ornament}{uzor_begin_10}
+\newcommand{\ornament}{}
 \newcommand{\ornamentending}{uzor_end_3}
 
 % calculate header offset from text body
@@ -23,7 +24,7 @@
 \addtolength\headoff{14pt}
 
 \title{Полный православный молитвослов на всякую потребу}
-\author{www.molitvoslov.org}
+\author{www.molitvoslov.com}
 \setcounter{secnumdepth}{-3}
 %\setcounter{tocdepth}{-1}
 
@@ -31,16 +32,12 @@
 
 \begin{document}
 
-\renewcommand{\ornament}{uzor_psaltyr}
-
 \input{../\jobname-announce}
 
+\renewcommand{\ornament}{uzor_psaltyr}
 \tableofcontents[part,chapter,section,bukva]
-
 \renewcommand{\ornament}{uzor_begin_10}
-
 \input{myroot.tmp}
-
 \input{../changes}
 
 \end{document}

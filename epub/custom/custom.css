@@ -27,7 +27,7 @@ div.ornamentHead {text-align: center; width:100%; page-break-after: avoid}
 div.partOrnamentHead {text-align: center; width:100%; page-break-after: avoid}
 div.ornamentFoot {clear: left; text-align: center; width:50%; margin-top: 2em; margin-right: 25%; margin-left: 25%; page-break-before: avoid}
 img.ornamentfirst {max-width: 90%}
-img.ornamentlast {max-width: 100%}
+img.ornamentlast {max-width: 100%; page-break-before: avoid}
 img.icon {width: 100%}
 div.centericon {margin-right: 25%; margin-left: 25%; width:50%;}
 img.centered-icon {width: 100%}
@@ -35,7 +35,7 @@ span.footnote-mark, sup.textsuperscript, span.footnote-mark a sup.textsuperscrip
 div.footnotes{border-top:solid 1px black; padding-bottom:1ex; padding-top:0.5ex; margin-right:15%; margin-top:2em; font-size:85%; text-align: left}
 div.footnotes p{margin-top:0; margin-bottom:0; text-indent:0}
 .partToc a, .partToc, .chapterToc a, .chapterToc {font-weight:bold; margin-top:0.5em; page-break-inside: avoid}
-.partHead, .chapterHead, .likechapterHead, .sectionHead, .subsectionHead {text-align: center; margin-top:0.5em; line-height: 1em; clear:both}
+.partHead, .chapterHead, .likechapterHead, .sectionHead, .subsectionHead {text-align: center; margin-top:0.5em; line-height: 1em; page-break-after: avoid}
 .quote {margin-bottom:0.25em; margin-top:0.25em; margin-left:1em; margin-right:1em; text-align:justify}
 div.maketitle {text-align:center}
 div.maketitle{ margin-bottom: 2em}

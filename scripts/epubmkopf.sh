@@ -2,10 +2,10 @@
 #
 #       epubmkopf.sh
 #
-#       This script generates OPF according to EPUB 2.0 spec in a target
+#       This script generates OPF according to EPUB 3.0 spec in a target
 #       directory.
 #       
-#       Copyright 2011-2013 Max Agapov <m4j@swissmail.org>
+#       Copyright 2011-2016 Maxim Agapov <m4j@swissmail.org>
 #       
 #       This program is free software; you can redistribute it and/or modify
 #       it under the terms of the GNU General Public License as published by
@@ -30,52 +30,71 @@ print_item() {
     [ -f "$2" ] && printf '    <item id="%s" href="%s" media-type="%s" />\n' "$1" "$2" "$3"
 }
 
-TARGET=$1
+JOBNAME=$1
 HTML_DIR=$2
 SPINE_XSLT=$3
+TOC=$4
 
 if [ -z "$TITLE" ]; then
-    TITLE=`get_latex_field title $TARGET.tex`
+    TITLE=`get_latex_field title $JOBNAME.tex`
 fi
-if [ -z "$CREATOR" ]; then
-    CREATOR=`get_latex_field author $TARGET.tex`
+if [ -n "$CREATOR" ]; then
+    CREATOR="<dc:creator>$CREATOR</dc:creator>"
 fi
 if [ -z "$DATE" ]; then
     DATE=`date "+%Y-%m-%d"`
 fi
+if [ -z "$MOD_TIMESTAMP" ]; then
+    MOD_TIMESTAMP=`date -u +"%Y-%m-%dT%H:%M:%SZ"`
+fi
+if [ -n "$SUBTITLE" ]; then
+    SUBTITLE="<dc:title id=\"subTitle\">$SUBTITLE</dc:title><meta refines=\"#subTitle\" property=\"title-type\">subtitle</meta>"
+fi
+if [ -n "$EXT_TITLE" ]; then
+    EXT_TITLE="<dc:title id=\"extTitle\">$EXT_TITLE</dc:title><meta refines=\"#extTitle\" property=\"title-type\">extended</meta>"
+fi
 
 cat <<EOF
 <?xml version="1.0" encoding="utf-8"?>
-<package xmlns="http://www.idpf.org/2007/opf" unique-identifier="bookid" version="2.0">
+<package xmlns="http://www.idpf.org/2007/opf" unique-identifier="bookid" version="3.0" xml:lang="ru" dir="ltr">
   <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
-      <dc:title>$TITLE</dc:title>
-      <dc:creator>$CREATOR</dc:creator>
-      <dc:contributor opf:role="bkp">$CONTRIBUTOR_BKP</dc:contributor>
+      $CREATOR
+      <dc:title id="mainTitle">$TITLE</dc:title>
+      <meta refines="#mainTitle" property="title-type">main</meta>
+      $SUBTITLE
+      $EXT_TITLE
       <dc:publisher>$PUBLISHER</dc:publisher>
-      <dc:format>$FORMAT</dc:format>
       <dc:date>$DATE</dc:date>
-      <dc:subject>$SUBJECT</dc:subject>
-      <dc:description>$DESCRIPTION</dc:description>
-      <dc:rights>$RIGHTS</dc:rights>
       <dc:identifier id="bookid">$BOOK_ID</dc:identifier>
       <dc:language>$BOOK_LANG</dc:language>
       <meta name="cover" content="cover-image"/>
+      <meta property="dcterms:modified">$MOD_TIMESTAMP</meta>
   </metadata>
   <manifest>
     <item id="pt" href="page-template.xpgt" media-type="application/vnd.adobe-page-template+xml"/>
-    <item id="style" href="$TARGET.css" media-type="text/css" />
-    <item id="cover" href="cover.html" media-type="application/xhtml+xml" />
-    <item id="cover-image" href="cover.jpg" media-type="image/jpg" />
+    <item id="style" href="$JOBNAME.css" media-type="text/css" />
+    <item id="cover" href="cover.xhtml" media-type="application/xhtml+xml" />
+    <item id="cover-image" href="cover.jpg" media-type="image/jpeg" properties="cover-image"/>
     <!-- item id="cover-vect" href="cover.svg" media-type="image/svg+xml" / -->
-    <item id="cover-thumb" href="thumb.jpg" media-type="image/jpg" />
-    <item id="toc" href="$TARGET.html" media-type="application/xhtml+xml" />
-    <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml" />
+    <item id="cover-thumb" href="thumb.jpg" media-type="image/jpeg" />
+    <item id="ncx" href="$EPUB_NCX" media-type="application/x-dtbncx+xml" />
+    <item id="navdoc" href="$EPUB_NAV" media-type="application/xhtml+xml" properties="nav"/>
 EOF
 
 ( cd $HTML_DIR
 
   # counter for item ids
   ID=1
+
+  # output fonts
+  for file in fonts/*woff; do
+      print_item "item-$((ID++))" "$file" "application/font-woff"
+  done
+
+  # output fonts
+  for file in fonts/*otf; do
+      print_item "item-$((ID++))" "$file" "application/font-sfnt"
+  done
 
   # output fonts
   for file in fonts/*ttf; do
@@ -101,29 +120,32 @@ EOF
       print_item "item-$((ID++))" "$file" "image/jpeg"
   done
 
-)
+  # output chapters
+  for file in ${JOBNAME}???*\.xhtml; do
+      id=${file%.*}
+      print_item "$id" "$file" "application/xhtml+xml"
+  done
 
-# output chapters
-for file in ${TARGET}???*\.html; do
-    print_item "$file" "$file" "application/xhtml+xml"
-done
+)
 
 cat <<EOF
   </manifest>
   <spine toc="ncx">
-    <itemref idref="cover" linear="no"/>
-    <itemref idref="toc" />
+    <itemref idref="cover"/>
 EOF
 
+( cd $HTML_DIR
+  for file in ${JOBNAME}li?*\.xhtml; do
+      id=${file%.*}
+      printf '    <itemref idref="%s"/>\n' "$id"
+  done
+)
+
 # output itemrefs
-xsltproc --nonet "$SPINE_XSLT" "$TARGET.html" || exit
+xsltproc --nonet "$SPINE_XSLT" "$TOC" || exit
 
 cat <<EOF
 
   </spine>
-  <guide>
-    <reference type="toc" title="Оглавление" href="$TARGET.html" />
-    <reference type="cover" title="Cover" href="cover.html"/>
-  </guide>
 </package>
 EOF
