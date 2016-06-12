@@ -70,6 +70,7 @@
                     <xsl:value-of select = "xhtml:a/@href"/>
                 </xsl:attribute>
             </content>
+<!--
             <xsl:for-each select="following-sibling::xhtml:div[@class='chapterToc' and preceding-sibling::xhtml:div[@class='partToc'][1]/xhtml:a/@href = $part]">
                 <xsl:variable name="chapter" select="xhtml:a/@href"/>
                 <navPoint>
@@ -105,6 +106,7 @@
                     </xsl:for-each>
                 </navPoint>
             </xsl:for-each>
+-->
         </navPoint>
     </xsl:template>
 

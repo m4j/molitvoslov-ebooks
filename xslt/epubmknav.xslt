@@ -31,7 +31,7 @@
                 <xsl:value-of select = "$xml_lang"/>
             </xsl:attribute>
             <head>
-                <meta content="text/html; charset=utf-8" http-equiv="content-type"/>
+                <meta charset="UTF-8" />
                 <xsl:if test="$stylesheet != ''">
                     <link rel="stylesheet" type="text/css">
                         <xsl:attribute name="href">

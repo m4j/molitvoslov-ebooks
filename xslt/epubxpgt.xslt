@@ -8,28 +8,35 @@
     <xsl:strip-space  elements="*"/>
     <xsl:preserve-space elements="xhtml:p"/>
 
-    <xsl:output method="xml" doctype-system="about:legacy-compat" encoding="UTF-8" indent="yes"/>
+    <xsl:output method="xml" doctype-system="about:legacy-compat" indent="yes"/>
 
 <!-- the identity template -->
 <xsl:template match="@*|node()">
-<!--
-    <xsl:if test="count(node()) != 0 or ./@* != ''">
--->
       <xsl:copy>
           <xsl:apply-templates select="@*|node()"/>
       </xsl:copy>
-<!--
-    </xsl:if>
--->
 </xsl:template>
 
-<!-- template for the head section. Only needed if we want to change, delete or add nodes. In our case we need it to add a link element pointing to an external CSS stylesheet. -->
+<!--
+Template for the head section. Only needed if we want to change, delete or add nodes. In our case we need it to add a link element pointing to an external CSS stylesheet.
+-->
 <xsl:template match="xhtml:head">
     <xsl:copy>
+        <meta charset="UTF-8" />
         <xsl:apply-templates select="@*|node()"/>
         <link rel="stylesheet" type="application/adobe-page-template+xml" href="page-template.xpgt" />
+        <link rel="stylesheet" type="text/css" href="color.css" />
     </xsl:copy>
 </xsl:template>
+
+<!--
+Remove some unused legacy metas from the header
+-->
+<xsl:template match="xhtml:meta[@http-equiv='Content-Type']" />
+<xsl:template match="xhtml:meta[@name='generator']" />
+<xsl:template match="xhtml:meta[@name='originator']" />
+<xsl:template match="xhtml:meta[@name='src']" />
+<xsl:template match="xhtml:meta[@name='date']" />
 
 <!--
 Assign class for images
@@ -85,12 +92,8 @@ Remove titlemark, e. g. "Part" wording
 <xsl:template match="xhtml:span[@class='titlemark']" />
 
 <!--
-Remove crosslinks at the bottom and at the top of the page
--->
-<xsl:template match="xhtml:div[@class='crosslinks']" />
-
-<!--
 Parts only in the main table of contents
+-->
 <xsl:template match="xhtml:div[@class='tableofcontents']">
     <div>
         <xsl:apply-templates select="@*"/>
@@ -103,7 +106,6 @@ Parts only in the main table of contents
         <xsl:apply-templates select="@*|node()"/>
     </xsl:copy>
 </xsl:template>
--->
 
 <!--
 Remove comments
@@ -113,30 +115,12 @@ Remove comments
 <!--
 Remove bukva sections from local part TOCs
 -->
-<xsl:template match="xhtml:div[@class='bukvaToc' and ../@class='partTOCS']"/>
+<xsl:template match="xhtml:div[@class='bukvaToc' and (../@class='partTOCS' or ../@class='tableofcontents')]"/>
 
 <!--
 Remove empty chapterTOCS divs
 -->
 <xsl:template match="xhtml:div[@class='chapterTOCS' and count(node()) = 0]"/>
-
-<!--
-Remove paragraphs containing only whitespace or non-breaking space
-match if only one node and that node is text and whitespace
--->
-<xsl:template id="remove_empty_pars" 
-    match="xhtml:p[count(node()) = 1 and child::node()[1][self::text() and (normalize-space(.) = '' or normalize-space(.) = '&#160;&#160;&#160;&#160;')]]" />
-
-<!--
-Remove empty links
--->
-<xsl:template match="text()">
-    <xsl:if test="normalize-space(.) != '&#160;&#160;&#160;&#160;'">
-        <xsl:copy>
-            <xsl:apply-templates select="@*|node()"/>
-        </xsl:copy>
-    </xsl:if>
-</xsl:template>
 
 <!--
 This is to remove "clear" attribute from <br>
@@ -168,6 +152,58 @@ images go under wide/, other images just go under images/
             <xsl:text>indent</xsl:text>
         </xsl:attribute>
         <xsl:apply-templates select="node()"/>
+    </xsl:copy>
+</xsl:template>
+
+<!--
+Remove paragraphs containing only whitespace or non-breaking space
+match if only one node and that node is text and whitespace
+
+<xsl:template id="remove_empty_pars" 
+    match="xhtml:p[count(node()) = 1 and child::node()[1][self::text() and (normalize-space(.) = '' or normalize-space(.) = '&#160;&#160;&#160;&#160;')]]" />
+-->
+<xsl:template match="xhtml:p[normalize-space() = '' or normalize-space() = '&#160;&#160;&#160;&#160;']" />
+<!--
+Remove empty links
+<xsl:template match="text()">
+    <xsl:if test="normalize-space(.) != '&#160;&#160;&#160;&#160;'">
+        <xsl:copy>
+            <xsl:apply-templates select="@*|node()"/>
+        </xsl:copy>
+    </xsl:if>
+</xsl:template>
+-->
+
+<!--
+Move h2 anchor into preceding div and wrap it around image to improve navigation on
+Kindle device
+-->
+<xsl:template match="xhtml:div[@class='ornamentHead' or @class='partOrnamentHead']">
+    <xsl:variable name="chapterId" select="following-sibling::xhtml:h2[1]/xhtml:a/@id"/>
+    <xsl:copy>
+        <xsl:apply-templates select="@*"/>
+        <a>
+            <xsl:attribute name="id">
+                <xsl:value-of select="$chapterId"/>
+            </xsl:attribute>
+            <xsl:apply-templates select="node()"/>
+        </a>
+    </xsl:copy>
+</xsl:template>
+
+<xsl:template match="xhtml:a[../@class='chapterHead' or ../@class='partHead']" />
+
+<!--
+Inline text-decoration style in <a>, because Kindle doesn't honor external CSS in that regard
+-->
+<xsl:template match="xhtml:a">
+    <xsl:copy>
+        <xsl:if test="@href">
+            <xsl:attribute name="style">
+                <xsl:text>text-decoration: none;</xsl:text>
+            </xsl:attribute>
+        </xsl:if>
+        <xsl:apply-templates select="@*|node()"/>
     </xsl:copy>
 </xsl:template>
 
@@ -223,6 +259,11 @@ Assign class for the div with chapter ending ornament
     </xsl:choose>
  </xsl:copy>
 </xsl:template>
+-->
+
+<!--
+Remove footer ornament from chapter TOCs
+<xsl:template match="xhtml:img[@class='ornamentlast' and (preceding-sibling::xhtml:div[@class='tableofcontents'] or preceding-sibling::xhtml:div[@class='chapterTOCS'])]"/>
 -->
 
 </xsl:stylesheet>

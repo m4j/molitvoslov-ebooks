@@ -1,17 +1,6 @@
-.larm-1200{font-size:1.1em}
-.latt-1095{font-family: monospace}
-.lati-1095{font-style: italic}
-.labx-1095{font-weight: bold}
 .textbf{font-weight: bold}
-.cmmi-10x-x-109{font-style: italic}
-.larm-1000{font-size:0.90em}
-.larm-0900{font-size:0.85em}
-.lati-0900{font-size:0.85em;font-style: italic}
-.labx-0900{font-size:0.85em;font-weight: bold}
-.labx-1440{font-size:1.27em;font-weight: bold}
-.myemph{color:#E34234;font-size:0.90em}
+.myemph{font-style: italic;font-size:0.90em}
 .mysmall{font-size:0.90em}
-.myemph .larm-1000 {font-size:1em}
 p { text-align: left; margin: 0px; line-height:1.3em}
 p.noindent { text-indent: 0em }
 p.indent{ text-indent: 1.3em }
@@ -25,23 +14,23 @@ div.minipage{width:100%}
 div.center {text-align: center}
 div.ornamentHead {text-align: center; width:100%; page-break-after: avoid}
 div.partOrnamentHead {text-align: center; width:100%; page-break-after: avoid}
-div.ornamentFoot {clear: left; text-align: center; width:50%; margin-top: 2em; margin-right: 25%; margin-left: 25%; page-break-before: avoid}
 img.ornamentfirst {max-width: 90%}
-img.ornamentlast {max-width: 100%; page-break-before: avoid}
 img.icon {width: 100%}
 div.centericon {margin-right: 25%; margin-left: 25%; width:50%;}
 img.centered-icon {width: 100%}
 span.footnote-mark, sup.textsuperscript, span.footnote-mark a sup.textsuperscript{ font-size:80%; line-height:0.8em}
 div.footnotes{border-top:solid 1px black; padding-bottom:1ex; padding-top:0.5ex; margin-right:15%; margin-top:2em; font-size:85%; text-align: left}
 div.footnotes p{margin-top:0; margin-bottom:0; text-indent:0}
-.partToc a, .partToc, .chapterToc a, .chapterToc {font-weight:bold; margin-top:0.5em; page-break-inside: avoid}
-.partHead, .chapterHead, .likechapterHead, .sectionHead, .subsectionHead {text-align: center; margin-top:0.5em; line-height: 1em; page-break-after: avoid}
+.partToc a, .partToc .chapterToc a, .chapterToc {font-weight:bold; page-break-inside: avoid; clear: both}
+.chapterToc a, .chapterToc {margin-top:0.5em}
+.partToc a, .partToc {margin-top:1em}
+.partHead, .chapterHead, .likechapterHead, .sectionHead, .subsectionHead {text-align: center; margin-top:0.5em; line-height: 1em; page-break-after: avoid; page-break-inside: avoid}
 .quote {margin-bottom:0.25em; margin-top:0.25em; margin-left:1em; margin-right:1em; text-align:justify}
 div.maketitle {text-align:center}
 div.maketitle{ margin-bottom: 2em}
 div.author, div.date {text-align:center}
-.sectionToc, .bukvaToc {margin-left:2.5em; text-indent: -1em}
-.bukvaToc {float: left; text-align: right}
+.sectionToc{margin-left:2.5em; text-indent: -1em}
+.bukvaToc {float: left; text-align: right; width: 3em; height: 2em;}
 .subsubsectionToc {margin-left:6em}
  .wrapfig-r {margin-right: 25%; margin-left: 25%; width:50%} 
  .wrapfig-rt {margin-right: 32%; margin-left: 32%; width:36%} 
@@ -50,7 +39,7 @@ div.author, div.date {text-align:center}
  .wrapfig-lt {margin-right: 32%; margin-left: 32%; width:36%} 
  .wrapfig-lw {margin-right: 15%; margin-left: 15%; width:70%} 
 body { font-family: "PT Serif"}
-h1,h2,h3,h4,h5 { text-align: left; color: #E34234; hyphens: none; -epub-hyphens:none; -webkit-hyphens:none; -moz-hyphens:none; page-break-after:avoid; }
+h1,h2,h3,h4,h5 { text-align: left; hyphens: none !important; -epub-hyphens:none !important; -webkit-hyphens:none !important; -moz-hyphens:none !important; page-break-after:avoid; page-break-inside:avoid }
 h2.titleHead{text-align:center}
 h3.sectionHead{margin-top:0.8em; margin-bottom:0.6em; font-weight: bold; text-align: center; font-size: 1.17em}
 h4.subsectionHead{text-align:center}
@@ -59,9 +48,6 @@ a { text-decoration: none; text-align: left }
 .partTOCS, .chapterTOCS, .tableofcontents { text-align: left; margin-left:0; margin-bottom:1.5em}
 span.titlemark { line-height: 300% }
 li.itemize {text-align: left; margin-left: -0.3em;}
-#announce {
-    page-break-after: always;
-}
 
 @font-face { font-style: normal; font-family: "PT Serif"; src: url(fonts/PTF55F.ttf)}
 @font-face { font-style: italic; font-family: "PT Serif"; src: url(fonts/PTF56F.ttf)}
@@ -72,4 +58,3 @@ td.td11{ padding-right:5pt; width: 50%; }
 .centerline {text-align:center;}
 .rightline {text-align:right;}
 hr.myparsep{width:30%;margin-top:1.5em; margin-bottom:1em;height:2px;border-width:0;color:black;background-color:black;margin-right: 35%; margin-left: 35%; }
-

@@ -1,6 +1,3 @@
-BOOK_ID=http://www.molitvoslov.com/molitvoslov/fb2\#molitvoslov
-PUBLISHER=Издательство сайта Molitvoslov.com
-TITLE=Молитвослов
-SUBTITLE=На всякую потребу
-EXT_TITLE=Полный православный молитвослов на всякую потребу
+CREATOR=Издательство Molitvoslov.com
+TITLE=Православный молитвослов
 BOOK_LANG=ru

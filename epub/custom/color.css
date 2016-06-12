@@ -1,0 +1,12 @@
+@media not amzn-mobi,
+not amzn-kf8 and (device-height:1024px) and (device-width:758px),
+not amzn-kf8 and (device-height:758px) and (device-width:1024px),
+not amzn-kf8 and (device-height:800px) and (device-width:600px),
+not amzn-kf8 and (device-height:600px) and (device-width:800px) {
+    .myemph{font-style: normal; color:#E34234}
+    h1,h2,h3,h4,h5 { color: #E34234 }
+}
+
+@media amzn-kf8, amzn-mobi {
+    body {font-family: Bookerly, serif}
+}

@@ -38,6 +38,9 @@ TOC=$4
 if [ -z "$TITLE" ]; then
     TITLE=`get_latex_field title $JOBNAME.tex`
 fi
+if [ -n "$PUBLISHER" ]; then
+    PUBLISHER="<dc:publisher>$PUBLISHER</dc:publisher>"
+fi
 if [ -n "$CREATOR" ]; then
     CREATOR="<dc:creator>$CREATOR</dc:creator>"
 fi
@@ -63,7 +66,7 @@ cat <<EOF
       <meta refines="#mainTitle" property="title-type">main</meta>
       $SUBTITLE
       $EXT_TITLE
-      <dc:publisher>$PUBLISHER</dc:publisher>
+      $PUBLISHER
       <dc:date>$DATE</dc:date>
       <dc:identifier id="bookid">$BOOK_ID</dc:identifier>
       <dc:language>$BOOK_LANG</dc:language>
@@ -73,10 +76,10 @@ cat <<EOF
   <manifest>
     <item id="pt" href="page-template.xpgt" media-type="application/vnd.adobe-page-template+xml"/>
     <item id="style" href="$JOBNAME.css" media-type="text/css" />
-    <item id="cover" href="cover.xhtml" media-type="application/xhtml+xml" />
+    <item id="style-color" href="color.css" media-type="text/css" />
+    <item id="cover" href="cover.xhtml" media-type="application/xhtml+xml"/>
     <item id="cover-image" href="cover.jpg" media-type="image/jpeg" properties="cover-image"/>
-    <!-- item id="cover-vect" href="cover.svg" media-type="image/svg+xml" / -->
-    <item id="cover-thumb" href="thumb.jpg" media-type="image/jpeg" />
+    <item id="cover-vect" href="cover.svg" media-type="image/svg+xml"/>
     <item id="ncx" href="$EPUB_NCX" media-type="application/x-dtbncx+xml" />
     <item id="navdoc" href="$EPUB_NAV" media-type="application/xhtml+xml" properties="nav"/>
 EOF
