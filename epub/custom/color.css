@@ -8,5 +8,20 @@ not amzn-kf8 and (device-height:600px) and (device-width:800px) {
 }
 
 @media amzn-kf8, amzn-mobi {
-    body {font-family: Bookerly, serif}
+    body {font-family: Bookerly, Verdana, serif}
 }
+
+@media  amzn-kf8
+{
+    .dropcaps, .lettrine
+    {
+        margin-top:-0.3225em;
+        margin-bottom:-0.3245em;
+        padding-top: 0.085em;
+} }
+
+@media amzn-kf8 and (device-aspect-ratio:1280/800) {
+    .myemph{font-style: normal; color:#E34234}
+    h1,h2,h3,h4,h5 { color: #E34234 }
+}
+

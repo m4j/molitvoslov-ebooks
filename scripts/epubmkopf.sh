@@ -74,7 +74,7 @@ cat <<EOF
       <meta property="dcterms:modified">$MOD_TIMESTAMP</meta>
   </metadata>
   <manifest>
-    <item id="pt" href="page-template.xpgt" media-type="application/vnd.adobe-page-template+xml"/>
+    <item id="pt" href="page-template.xpgt" media-type="application/adobe-page-template+xml"/>
     <item id="style" href="$JOBNAME.css" media-type="text/css" />
     <item id="style-color" href="color.css" media-type="text/css" />
     <item id="cover" href="cover.xhtml" media-type="application/xhtml+xml"/>
@@ -101,7 +101,7 @@ EOF
 
   # output fonts
   for file in fonts/*ttf; do
-      print_item "item-$((ID++))" "$file" "application/x-font-ttf"
+      print_item "item-$((ID++))" "$file" "application/x-font-truetype"
   done
 
   # output font licenses

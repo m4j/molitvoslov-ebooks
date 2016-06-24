@@ -39,11 +39,24 @@ div.author, div.date {text-align:center}
  .wrapfig-lt {margin-right: 32%; margin-left: 32%; width:36%} 
  .wrapfig-lw {margin-right: 15%; margin-left: 15%; width:70%} 
 body { font-family: "PT Serif"}
-h1,h2,h3,h4,h5 { text-align: left; hyphens: none !important; -epub-hyphens:none !important; -webkit-hyphens:none !important; -moz-hyphens:none !important; page-break-after:avoid; page-break-inside:avoid }
-h2.titleHead{text-align:center}
-h3.sectionHead{margin-top:0.8em; margin-bottom:0.6em; font-weight: bold; text-align: center; font-size: 1.17em}
-h4.subsectionHead{text-align:center}
-h5.subsubsectionHead {margin-top:0.7em; margin-bottom:0.5em; font-weight: bold; text-align: center; font-size: 1em; page-break-after:avoid; }
+.nohyphens{
+  hyphens: none !important;
+  -moz-hyphens: none !important;
+  -webkit-hyphens: none !important;
+  adobe-hyphenate: none !important;
+}
+h1,h2,h3,h4,h5 { text-align: left;
+  hyphens: none !important;
+  -moz-hyphens: none !important;
+  -webkit-hyphens: none !important;
+  adobe-hyphenate: none !important;
+  page-break-after: avoid;
+  page-break-inside: avoid;
+}
+.titleHead{text-align:center}
+.sectionHead{margin-top:0.8em; margin-bottom:0.6em; font-weight: bold; text-align: center; font-size: 1.17em}
+.subsectionHead{text-align:center}
+.subsubsectionHead {margin-top:0.7em; margin-bottom:0.5em; font-weight: bold; text-align: center; font-size: 1em; page-break-after:avoid; }
 a { text-decoration: none; text-align: left }
 .partTOCS, .chapterTOCS, .tableofcontents { text-align: left; margin-left:0; margin-bottom:1.5em}
 span.titlemark { line-height: 300% }
@@ -58,3 +71,27 @@ td.td11{ padding-right:5pt; width: 50%; }
 .centerline {text-align:center;}
 .rightline {text-align:right;}
 hr.myparsep{width:30%;margin-top:1.5em; margin-bottom:1em;height:2px;border-width:0;color:black;background-color:black;margin-right: 35%; margin-left: 35%; }
+
+.lettrine{
+	font-size: 4.5em; 
+	float: left;
+    vertical-align: text-top;
+    display: inline-block;
+    margin-right: .03em; padding-top: 0.1em;
+}
+.lettrine-ante{vertical-align: top;}
+.lettrine-letter{
+}
+.lettrine-A{margin-right: 0.3em;}
+.lettrine-A + .lettrine-line{margin-left: -0.4em;}
+.lettrine-À{margin-right: 0.3em;}
+.lettrine-À + .lettrine-line{margin-left: -0.4em;}
+.lettrine-J{line-height: 1; margin-right: 0;}
+.lettrine-H, .lettrine-I, .lettrine-N, .lettrine-U{margin-right: 0;}
+.lettrine-V{margin-right: -0.3em;}
+.lettrine-V + .lettrine-line{margin-left: 0.3em;}
+.lettrine-Q{padding-bottom: 1em;margin-top: -0.6em;}
+lettrine-Д{margin-bottom: -0.6em}
+/*.lettrine-line{font-variant: small-caps;}*/
+span.dropcaps { display: inline-block; vertical-align:text-top; font-size: 4.5em; float: left; margin-right: .03em; padding-top: 0.1em; }
+span.afterA { margin-left: -0.5em; }

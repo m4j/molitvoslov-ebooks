@@ -3,6 +3,7 @@
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:epub="http://www.idpf.org/2007/ops"
     exclude-result-prefixes="xhtml xsl">
 
     <xsl:strip-space  elements="*"/>
@@ -150,6 +151,15 @@ images go under wide/, other images just go under images/
     <xsl:copy>
         <xsl:attribute name="class">
             <xsl:text>indent</xsl:text>
+        </xsl:attribute>
+        <xsl:apply-templates select="node()"/>
+    </xsl:copy>
+</xsl:template>
+
+<xsl:template match="xhtml:p[xhtml:span/@class='lettrine']">
+    <xsl:copy>
+        <xsl:attribute name="class">
+            <xsl:text>noindent</xsl:text>
         </xsl:attribute>
         <xsl:apply-templates select="node()"/>
     </xsl:copy>
