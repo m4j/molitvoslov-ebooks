@@ -77,7 +77,11 @@ hr.myparsep{width:30%;margin-top:1.5em; margin-bottom:1em;height:2px;border-widt
 	float: left;
     vertical-align: text-top;
     display: inline-block;
-    margin-right: .03em; padding-top: 0.1em;
+    margin-right: .03em;
+    margin-top:-0.165em;
+    margin-bottom:-0.3245em;
+    padding-top: 0em;
+    line-height: 1.2em;
 }
 .lettrine-ante{vertical-align: top;}
 .lettrine-letter{
@@ -91,7 +95,7 @@ hr.myparsep{width:30%;margin-top:1.5em; margin-bottom:1em;height:2px;border-widt
 .lettrine-V{margin-right: -0.3em;}
 .lettrine-V + .lettrine-line{margin-left: 0.3em;}
 .lettrine-Q{padding-bottom: 1em;margin-top: -0.6em;}
-lettrine-Д{margin-bottom: -0.6em}
+/*.lettrine-Д{margin-bottom: -0.6em}*/
 /*.lettrine-line{font-variant: small-caps;}*/
 span.dropcaps { display: inline-block; vertical-align:text-top; font-size: 4.5em; float: left; margin-right: .03em; padding-top: 0.1em; }
 span.afterA { margin-left: -0.5em; }
