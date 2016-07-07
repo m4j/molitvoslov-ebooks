@@ -6,10 +6,6 @@ p.noindent { text-indent: 0em }
 p.indent{ text-indent: 1.3em }
 .verse {margin-top:0.7em}
 .verse p {margin-left:3.3em; text-indent: -2em;}
-dd {margin-left: 1em}
-dd.enumerate {margin-left: 4em}
-dt {float:left; clear:left; margin-right:0.5em; text-align:right}
-dt.enumerate {width:3.5em}
 div.minipage{width:100%}
 div.center {text-align: center}
 div.ornamentHead {text-align: center; width:100%; page-break-after: avoid}
@@ -39,25 +35,20 @@ div.author, div.date {text-align:center}
  .wrapfig-lt {margin-right: 32%; margin-left: 32%; width:36%} 
  .wrapfig-lw {margin-right: 15%; margin-left: 15%; width:70%} 
 body { font-family: "PT Serif"}
-.nohyphens{
-  hyphens: none !important;
-  -moz-hyphens: none !important;
-  -webkit-hyphens: none !important;
-  adobe-hyphenate: none !important;
-}
 h1,h2,h3,h4,h5 { text-align: left;
-  hyphens: none !important;
-  -moz-hyphens: none !important;
-  -webkit-hyphens: none !important;
-  adobe-hyphenate: none !important;
-  page-break-after: avoid;
+  adobe-hyphenate: none;
+  -webkit-hyphens: none;
+  word-wrap: break-word;
+  -webkit-column-break-inside: avoid;
   page-break-inside: avoid;
+  -webkit-column-break-after: avoid;
+  page-break-after: avoid;
 }
 .titleHead{text-align:center}
 .sectionHead{margin-top:0.8em; margin-bottom:0.6em; font-weight: bold; text-align: center; font-size: 1.17em}
 .subsectionHead{text-align:center}
 .subsubsectionHead {margin-top:0.7em; margin-bottom:0.5em; font-weight: bold; text-align: center; font-size: 1em; page-break-after:avoid; }
-a { text-decoration: none; text-align: left }
+a { text-decoration: none !important; text-align: left }
 .partTOCS, .chapterTOCS, .tableofcontents { text-align: left; margin-left:0; margin-bottom:1.5em}
 span.titlemark { line-height: 300% }
 li.itemize {text-align: left; margin-left: -0.3em;}
@@ -67,7 +58,6 @@ li.itemize {text-align: left; margin-left: -0.3em;}
 @font-face { font-weight: bold; font-family: "PT Serif"; src: url(fonts/PTF75F.ttf)}
 @font-face { font-weight: bold; font-style: italic; font-family: "PT Serif"; src: url(fonts/PTF76F.ttf)}
 
-td.td11{ padding-right:5pt; width: 50%; }
 .centerline {text-align:center;}
 .rightline {text-align:right;}
 hr.myparsep{width:30%;margin-top:1.5em; margin-bottom:1em;height:2px;border-width:0;color:black;background-color:black;margin-right: 35%; margin-left: 35%; }
@@ -97,5 +87,18 @@ hr.myparsep{width:30%;margin-top:1.5em; margin-bottom:1em;height:2px;border-widt
 .lettrine-Q{padding-bottom: 1em;margin-top: -0.6em;}
 /*.lettrine-Д{margin-bottom: -0.6em}*/
 /*.lettrine-line{font-variant: small-caps;}*/
-span.dropcaps { display: inline-block; vertical-align:text-top; font-size: 4.5em; float: left; margin-right: .03em; padding-top: 0.1em; }
-span.afterA { margin-left: -0.5em; }
+div.tabular, div.center div.tabular {text-align: center; margin-top:0.7em; margin-bottom:0.7em;margin-left: 1em; }
+table.tabular {width:100%}
+tr, td {
+    text-indent: 0em;
+    text-align: left;
+    padding-right:0.3em;
+    vertical-align:baseline;
+}
+
+ul, ol {margin-top:0.7em; margin-bottom:0.5em; padding-left:0.5em; margin-left: 1.5em;}
+li { text-align:left; text-indent: 0em; padding-bottom:0.2em; }
+.enumerate1 {list-style-type:decimal;}
+.enumerate2 {list-style-type:lower-alpha;}
+.enumerate3 {list-style-type:lower-roman;}
+.enumerate4 {list-style-type:upper-alpha;}

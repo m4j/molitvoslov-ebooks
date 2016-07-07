@@ -159,12 +159,12 @@ $(EPUB_HTML_DIR)/$(EPUB_OPF): $(TARGET).html
 	export BOOK_LANG="$(BOOK_LANG)"; \
 	export EPUB_NAV="$(EPUB_NAV)"; \
 	export EPUB_NCX="$(EPUB_NCX)"; \
-	$(SCRIPTS)/epubapplyxslt.sh $(TARGET) $(EPUB_HTML_DIR) $(XSLT)/epubxpgt.xslt; \
+	$(SCRIPTS)/epubapplyxslt.sh $(TARGET) $(EPUB_HTML_DIR) $(XSLT)/epubxpgt.xslt && \
 	$(SED_INPLACE)  \
 		-e "s;$(TARGET_IMG_DIR)/wide;images;" \
 		-e "s;$(TARGET_IMG_DIR)/tall;images;" \
 		-e "s;$(TARGET_IMG_DIR);images;" \
-		$(EPUB_HTML_DIR)/$(TARGET)*.xhtml; \
+		$(EPUB_HTML_DIR)/$(TARGET)*.xhtml && \
 	export img_fnames="`sed -n 's;^.*<img src="images/\([-_\.[:alnum:]]*\)".*$$;\1;p' $(EPUB_HTML_DIR)/$(TARGET)*.xhtml | sort -u`"; \
     echo $$img_fnames; \
 	for file in $$img_fnames; do \
@@ -191,12 +191,12 @@ $(EPUB_HTML_DIR)/cover.jpg: $(COVERS)/$(TARGET)-ebook-tabloid.svg
 $(EPUB_HTML_DIR)/cover.svg: $(COVERS)/$(TARGET)-ebook-tabloid.svg
 	cp -v $? $@
 	
-package: $(EPUB_HTML_DIR)/$(EPUB_OPF) $(EPUB_HTML_DIR)/$(TARGET).css $(EPUB_HTML_DIR)/color.css $(EPUB_HTML_DIR)/$(EPUB_NAV) $(EPUB_HTML_DIR)/$(EPUB_NCX) images
+package: $(EPUB_HTML_DIR)/$(EPUB_OPF) $(EPUB_HTML_DIR)/$(TARGET).css $(EPUB_HTML_DIR)/color.css $(EPUB_HTML_DIR)/$(EPUB_NAV) $(EPUB_HTML_DIR)/$(EPUB_NCX) 
 	cd $(TARGET_EPUB_DIR); \
 	  zip -0Xq $(PACKAGED_EPUB) mimetype; \
 	  zip -Xr9Dq $(PACKAGED_EPUB) META-INF OEBPS
 
-$(PACKAGED_EPUB): $(EPUB_HTML_DIR)/$(EPUB_OPF) $(EPUB_HTML_DIR)/$(TARGET).css $(EPUB_HTML_DIR)/color.css $(EPUB_HTML_DIR)/$(EPUB_NAV) $(EPUB_HTML_DIR)/$(EPUB_NCX) images
+$(PACKAGED_EPUB): $(EPUB_HTML_DIR)/$(EPUB_OPF) $(EPUB_HTML_DIR)/$(TARGET).css $(EPUB_HTML_DIR)/color.css $(EPUB_HTML_DIR)/$(EPUB_NAV) $(EPUB_HTML_DIR)/$(EPUB_NCX) 
 	$(JAVA) -jar $(EPUBCHECK_JAR) $(TARGET_EPUB_DIR) -mode exp -save
 
 $(TARGET_EPUB): $(PACKAGED_EPUB)
