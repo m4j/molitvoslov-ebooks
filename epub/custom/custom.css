@@ -1,5 +1,6 @@
 .textbf{font-weight: bold}
 .myemph{font-style: italic;font-size:0.90em}
+.myemphn{font-style: normal;font-size:1em}
 .mysmall{font-size:0.90em}
 p { text-align: left; margin: 0px; line-height:1.3em}
 p.noindent { text-indent: 0em }
