@@ -132,6 +132,7 @@ $(EPUB_HTML_DIR)/$(EPUB_NAV): $(TARGET_TOC).html
 		--stringparam docTitle "$(TITLE)" \
 		--stringparam docAuthor "$(CREATOR)" \
 		--stringparam docTOCLabel "Оглавление" \
+		--stringparam docTOCPage "$(TARGET_TOC).xhtml" \
 		--stringparam docCoverLabel "Обложка" \
 		--stringparam docCoverPage "$(TARGET_COVER).xhtml" \
 		--stringparam docPrefaceLabel "Предисловие" \

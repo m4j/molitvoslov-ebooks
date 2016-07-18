@@ -8,7 +8,7 @@ not amzn-kf8 and (device-height:600px) and (device-width:800px) {
 }
 
 @media amzn-kf8, amzn-mobi {
-    body {font-family: Bookerly, Georgia, Verdana, serif}
+    body {font-family: Bookerly, Caecilia, Georgia, Verdana, serif}
 }
 
 @media  amzn-kf8

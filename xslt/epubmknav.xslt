@@ -14,6 +14,7 @@
     <xsl:param name="docTitle">Book Title</xsl:param>
     <xsl:param name="docAuthor">Book Author</xsl:param>
     <xsl:param name="docTOCLabel">Contents</xsl:param>
+    <xsl:param name="docTOCPage"></xsl:param>
     <xsl:param name="docLandmarksLabel">Contents</xsl:param>
     <xsl:param name="docCoverLabel"></xsl:param>
     <xsl:param name="docCoverPage"></xsl:param>
@@ -69,11 +70,21 @@
                             </xsl:if>
                             <xsl:if test="$docPrefacePage != ''">
                                 <li>
-                                    <a epub:type="preface">
+                                    <a epub:type="bodymatter">
                                         <xsl:attribute name="href">
                                             <xsl:value-of select="$docPrefacePage"/>
                                         </xsl:attribute>
                                         <xsl:value-of select="$docPrefaceLabel"/>
+                                    </a>
+                                </li>
+                            </xsl:if>
+                            <xsl:if test="$docTOCPage != ''">
+                                <li>
+                                    <a epub:type="toc">
+                                        <xsl:attribute name="href">
+                                            <xsl:value-of select="$docTOCPage"/>
+                                        </xsl:attribute>
+                                        <xsl:value-of select="$docTOCLabel"/>
                                     </a>
                                 </li>
                             </xsl:if>
