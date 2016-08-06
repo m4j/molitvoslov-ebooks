@@ -1,5 +1,5 @@
 BEGIN{ ln=0; par=0}
-/mychapter{/ {ln=0; par=0; print "============="}
+/mychapter{/ {ln=0; par=0; }
 #/^[ \t]*$/ { ln=1; }
 #/^[ \t]*$/ { if (ln == 0) {ln=1; printf "\n";} }
 #ln == 0 {print $0; }

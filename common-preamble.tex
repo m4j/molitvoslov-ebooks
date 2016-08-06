@@ -177,7 +177,7 @@
 \makeatother
 
 \title{Полный православный молитвослов на всякую потребу}
-\author{www.molitvoslov.org}
+\author{molitvoslov.com}
 %\raggedbottom
 % widow/orphane control
 \widowpenalty=2000
@@ -361,6 +361,12 @@ pdfsubject=, pdfkeywords={Православие,церковь,молитва,�
 \newcommand{\mybibleref}[1]{%
   \myemph{\footnotesize #1}%
 }
+
+\renewcommand{\LettrineFontHook}{\color{kinovar}\fontseries{bx}}
+%\setcounter{DefaultLines}{4}
+%\renewcommand{\DefaultLraise}{0.03}
+%\setlength{\DefaultNindent}{0em}
+\renewcommand{\DefaultLoversize}{0.03}
 
 \input{common-prayers}
 

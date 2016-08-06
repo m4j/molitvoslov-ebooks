@@ -4,24 +4,27 @@ not amzn-kf8 and (device-height:758px) and (device-width:1024px),
 not amzn-kf8 and (device-height:800px) and (device-width:600px),
 not amzn-kf8 and (device-height:600px) and (device-width:800px) {
     .myemphn, .myemph{font-style: normal; color:#E34234}
-    h1,h2,h3,h4,h5 { color: #E34234 }
+    h1,h2,h3,h4,h5, .lettrine { color: #E34234 }
 }
 
 @media amzn-kf8, amzn-mobi {
-    body {font-family: Bookerly, Caecilia, Georgia, Verdana, serif}
+    body {font-family: Bookerly, Georgia, Verdana, serif}
 }
 
-@media  amzn-kf8
-{
-    .dropcaps, .lettrine
-    {
-        margin-top:-0.3225em;
+@media  amzn-kf8 {
+    .dropcaps, .lettrine {
+        margin-top:-0.2725em;
         margin-bottom:-0.3245em;
         padding-top: 0.085em;
-} }
+    }
+}
 
 @media amzn-kf8 and (device-aspect-ratio:1280/800) {
     .myemphn, .myemph{font-style: normal; color:#E34234}
-    h1,h2,h3,h4,h5 { color: #E34234 }
+    h1,h2,h3,h4,h5, .lettrine { color: #E34234 }
+}
+
+@media amzn-mobi {
+    .bukvaToc {text-align: left; width: 3em; height: 2em;}
 }
 
